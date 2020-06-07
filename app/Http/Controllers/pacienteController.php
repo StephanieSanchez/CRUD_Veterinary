@@ -13,7 +13,6 @@ class pacienteController extends Controller
 {
     //
     function createProfile(Request $request){
-
         $campos=[
             'nombreExpediente' => 'required',
             'edadExpediente' => 'required',
@@ -60,7 +59,8 @@ class pacienteController extends Controller
             $paciente -> dueñoExpediente = $request -> dueñoExpediente;
             $paciente -> telefonoExpediente = $request -> telefonoExpediente;
             $paciente -> direccionExpediente = $request -> direccionExpediente;
-            $paciente -> fechaExpediente = $now->format('Y-m-d');;
+            $paciente -> fechaExpediente = $now->format('Y-m-d');
+            $paciente -> estatusExpediente = 1;
             $paciente -> idRaza = $idRaza;
             $paciente -> idMascota = $idMascota;
             $paciente -> idUsuario = $idUsuario;
@@ -71,6 +71,7 @@ class pacienteController extends Controller
             alert()->warning('No se registro el perfil', '¡Error!');
             return redirect('/createProfile');
         }
+
     }
 
     function getView(){

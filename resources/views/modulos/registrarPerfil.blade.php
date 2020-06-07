@@ -51,7 +51,7 @@
                         <form role="form" method="POST" action = "{{ url('/updateProfile') }}">
                     @endif
                     @if(!isset($profile)) 
-                        <form role="form" method="POST" action = "{{ url('/createProfile') }}">
+                        <form role="form" method="POST" action = "{{ url('/addProfile') }}">
                     @endif
                         {{csrf_field()}}
                         <input type="hidden" name="idExpediente" value="{{$id}}">
@@ -152,41 +152,14 @@
                                 <h3 class="card-title">Datos del usuario</h3>
                             </div>
                             <p>El usuario registrado tendrá acceso al sistema para consultar datos de su mascota</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            Registrar usuario nuevo
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario"  >
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Contraseña</label>
-                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña"  >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                          <input type="checkbox" /> Buscar usuario ya registrado
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required disabled>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Contraseña</label>
-                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <input type="checkbox" onclick="camposUsuarios()"/> Buscar usuario ya registrado
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nombre de usuario</label>
+                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Contraseña</label>
+                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña"  required>
                             </div>
                         </div>
                         <!-- /.card-body -->

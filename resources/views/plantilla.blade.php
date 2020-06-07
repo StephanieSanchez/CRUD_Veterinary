@@ -148,6 +148,11 @@ document.getElementById('etiqueta_fecha').innerHTML=fecha;
     }
   }
 </script>
+<script>
+  function camposUsuarios(){
+    document.getElementById("contraseñaUsusario").disabled = !document.getElementById("contraseñaUsusario").disabled;
+  }
+</script>
   @include('sweet::alert')
 </body>
 </html>

@@ -56,7 +56,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item has-treeview">
-                <a href="#" class="nav-link active">
+                <a href="{{url('/createConsult')}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registro consultas</p>
                 </a>
