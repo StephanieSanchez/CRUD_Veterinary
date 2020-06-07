@@ -81,7 +81,15 @@ class pacienteController extends Controller
     }
 
     function getProfiles(){
-        $datos['mascotas'] = mascota::paginate(3);
+        $datos['mascotas'] = paciente::paginate(10);
         return view('modulos.listaPerfiles', $datos);
+    }
+
+    function deleteProfile(Request $request){
+        $keys = '_token';
+        $datos = request()->except($keys);
+        paciente::where('idExpediente', '=', $request -> idExpediente)->update($datos);
+        alert()->success('El paciente se ha dado de baja', '¡Exito!');
+        return redirect('/listaPerfiles');
     }
 }

@@ -36,27 +36,30 @@
                         <th>NOMBRE DEL PACIENTE</th>
                         <th>NOMBRE DEL DUEÑO</th>
                         <th>TELÉFONO</th>
-                        <th>MASCOTA</th>
+                        <th>EDAD</th>
                         <th>ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
                     @foreach($mascotas as $mascota)
+                    @if($mascota->estatusExpediente == 1)
                     <tr>
                         <td>{{$mascota->idExpediente}}</td>
                         <td>{{$mascota->nombreExpediente}}</td>
                         <td>{{$mascota->dueñoExpediente}}</td>
                         <td>{{$mascota->telefonoExpediente}}</td>
-                        <td>{{$mascota->nombreMascota}}</td>
+                        <td>{{$mascota->edadExpediente}}</td>
                         <td>
                             <form method="post" action="#" style="display:inline">
                                 {{csrf_field()}}
                                 <input type="hidden" name="clave_acc" value="{{$mascota->idExpediente}}"/>
                                 <button type="submit" name="Ver" class="btn btn-info">Ver</button>
                             </form>
-                            <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="">Eliminar</a>   
+                            <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="#eliminar{{$mascota->idExpediente}}">Eliminar</a>   
                         </td>
                     </tr>
+                    @include('modulos.modalEliminar')
+                    @endif
                     @endforeach
                     </tbody>
                     </table>
