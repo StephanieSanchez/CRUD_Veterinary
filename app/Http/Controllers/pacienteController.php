@@ -13,10 +13,7 @@ class pacienteController extends Controller
 {
     //
     function createProfile(Request $request){
-<<<<<<< HEAD
-        
-=======
->>>>>>> 034b06ada51474431fdd2d39f869aec5937c97de
+
         $campos=[
             'nombreExpediente' => 'required',
             'edadExpediente' => 'required',
