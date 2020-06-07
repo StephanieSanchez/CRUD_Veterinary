@@ -13,7 +13,10 @@ class pacienteController extends Controller
 {
     //
     function createProfile(Request $request){
+<<<<<<< HEAD
         
+=======
+>>>>>>> 034b06ada51474431fdd2d39f869aec5937c97de
         $campos=[
             'nombreExpediente' => 'required',
             'edadExpediente' => 'required',
@@ -98,9 +101,8 @@ class pacienteController extends Controller
     }
 
     function updateProfile(Request $request){
-        $keys = '_token';
-        $datos = request()->except($keys);
-        paciente::where('idExpediente', '=', $request -> idExpediente)->update($datos);
+        $sql = "UPDATE expediente SET nombreExpediente = '".$request->nombreExpediente."', edadExpediente = '".$request->edadExpediente."', dueñoExpediente = '".$request->dueñoExpediente."', telefonoExpediente = '".$request->telefonoExpediente."', direccionExpediente = '".$request->direccionExpediente."', idMascota = ".$request->idMascota.", idRaza = ".$request->idRaza." WHERE idExpediente = ".$request->idExpediente;
+        DB::update($sql);
         return redirect('/listaPerfiles');
     }
     function deleteProfile(Request $request){

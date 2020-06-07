@@ -47,7 +47,12 @@
                             $id = $profile->idExpediente;
                         @endphp
                     @endif
-                    <form role="form" method="POST" action = "{{ url('/createProfile') }}">
+                    @if(isset($profile)) 
+                        <form role="form" method="POST" action = "{{ url('/updateProfile') }}">
+                    @endif
+                    @if(!isset($profile)) 
+                        <form role="form" method="POST" action = "{{ url('/createProfile') }}">
+                    @endif
                         {{csrf_field()}}
                         <input type="hidden" name="idExpediente" value="{{$id}}">
                         <div class="card-body">
@@ -156,11 +161,11 @@
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required >
+                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario"  >
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Contraseña</label>
-                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required >
+                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña"  >
                                             </div>
                                         </div>
                                     </div>
