@@ -70,22 +70,23 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Mascota</label>
                                                         <p>Seleccione una opción existente</p>
-                                                        <select id="idMascota" name="idMascota" class="form-control">
-                                                            <option value="0">--Seleccione una opción--</option>
+                                                        <select id="idMascota" name="idMascota" class="form-control" onchange="activarOpcion(this)">
+                                                            <option value="0" disabled selected>--Seleccione una opción--</option>
+                                                            <option value="0">Registrar otro</option>
                                                             @foreach($mascotas as $mascota)
                                                                 <option value="{{$mascota->idMascota}}">{{$mascota->nombreMascota}} | {{$mascota->tipoMascota}}</option>
                                                             @endforeach
                                                         </select>
                                                         <br>
                                                         <p>Registre el dato si no lo encuentra en el catalogo</p>
-                                                        <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" placeholder="p. ej. perro, gato, etc." >
+                                                        <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" placeholder="p. ej. perro, gato, etc." disabled>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Tipo de mascota</label>
                                                         <p>Registre el dato si no lo encuentra en el catalogo<p>
-                                                        <input type="text" class="form-control" id="tipoMascota" name="tipoMascota" placeholder="p. ej. mamifero, reptíl, etc.">
+                                                        <input type="text" class="form-control" id="tipoMascota" name="tipoMascota" placeholder="p. ej. mamifero, reptíl, etc." disabled>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -101,15 +102,16 @@
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nombre de la raza</label>
                                                 <p>Seleccione una opción existente</p>
-                                                <select name="idRaza" class="form-control">
-                                                    <option value="0">--Seleccione una opción--</option>
+                                                <select name="idRaza" class="form-control" onchange="activarOpcionRaza(this)">
+                                                    <option value="0" disabled selected>--Seleccione una opción--</option>
+                                                    <option value="0">Registrar otro</option>
                                                     @foreach($razas as $raza)
                                                         <option value="{{$raza->idRaza}}">{{$raza->nombreRaza}}</option>
                                                     @endforeach
                                                 </select>
                                                 <br>
                                                 <p>Registre el dato si no lo encuentra en el catalogo</p>
-                                                <input type="text" class="form-control" id="nombreRaza" name="nombreRaza" placeholder="p. ej. pastor aleman, guppy, etc.">
+                                                <input type="text" class="form-control" id="nombreRaza" name="nombreRaza" placeholder="p. ej. pastor aleman, guppy, etc." disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -119,13 +121,41 @@
                                 <h3 class="card-title">Datos del usuario</h3>
                             </div>
                             <p>El usuario registrado tendrá acceso al sistema para consultar datos de su mascota</p>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nombre de usuario</label>
-                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required >
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Contraseña</label>
-                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required >
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Registrar usuario nuevo
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nombre de usuario</label>
+                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Contraseña</label>
+                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                           Buscar usuario ya registrado
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Nombre de usuario</label>
+                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Contraseña</label>
+                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->

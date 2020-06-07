@@ -120,6 +120,34 @@ fecha = diasSemana[f.getDay()] + ", " + f.getDate() + " de " + meses[f.getMonth(
 document.getElementById('etiqueta_fecha').innerHTML=fecha;
 }
 </script>
+<script>
+  function activarOpcion(op){
+    var opc = op.value;
+    switch(opc){
+      case '0':
+        document.getElementById("nombreMascota").disabled = false;
+        document.getElementById("tipoMascota").disabled = false;
+      break;
+      default:
+        document.getElementById("nombreMascota").disabled = true;
+        document.getElementById("tipoMascota").disabled = true;
+      break;
+    }
+  }
+</script>
+<script>
+  function activarOpcionRaza(op){
+    var opc = op.value;
+    switch(opc){
+      case '0':
+        document.getElementById("nombreRaza").disabled = false;
+      break;
+      default:
+        document.getElementById("nombreRaza").disabled = true;
+      break;
+    }
+  }
+</script>
   @include('sweet::alert')
 </body>
 </html>
