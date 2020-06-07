@@ -47,7 +47,12 @@
                             $id = $profile->idExpediente;
                         @endphp
                     @endif
-                    <form role="form" method="POST" action = "{{ url('/createProfile') }}">
+                    @if(isset($profile)) 
+                        <form role="form" method="POST" action = "{{ url('/updateProfile') }}">
+                    @endif
+                    @if(!isset($profile)) 
+                        <form role="form" method="POST" action = "{{ url('/createProfile') }}">
+                    @endif
                         {{csrf_field()}}
                         <input type="hidden" name="idExpediente" value="{{$id}}">
                         <div class="card-body">
