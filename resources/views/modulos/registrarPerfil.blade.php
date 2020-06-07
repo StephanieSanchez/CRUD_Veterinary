@@ -34,10 +34,9 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    @php $url = 'action="{{url(\'/createProfile\')"'; $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; @endphp
+                    @php $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; @endphp
                     @if(isset($profile)) 
                         @php
-                            $url = '{{url(\'/updateProfile\')';
                             $name = $profile->nombreExpediente;
                             $age = $profile->edadExpediente;
                             $nameOwner = $profile->dueñoExpediente; 
