@@ -22,4 +22,6 @@ Route::get('/inicio', function () {
 Route::get('/createProfile', 'pacienteController@getView');
 Route::post('/createProfile', 'pacienteController@getView');
 Route::get('/listaPerfiles', 'pacienteController@getProfiles');
+Route::post('/getProfile', 'pacienteController@getProfile');
+Route::post('/updateProfile', 'pacienteController@updateProfile');
 Route::post('/deleteProfile', 'pacienteController@deleteProfile');

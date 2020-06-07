@@ -34,28 +34,43 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form role="form" method="POST" action="{{ url('/createProfile') }}">
+                    @php $url = 'action="{{url(\'/createProfile\')"'; $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; @endphp
+                    @if(isset($profile)) 
+                        @php
+                            $url = '{{url(\'/updateProfile\')';
+                            $name = $profile->nombreExpediente;
+                            $age = $profile->edadExpediente;
+                            $nameOwner = $profile->dueñoExpediente; 
+                            $phone = $profile->telefonoExpediente; 
+                            $address = $profile->direccionExpediente;
+                            $petName = $profile->nombreMascota;
+                            $raceName = $profile->nombreRaza;
+                            $id = $profile->idExpediente;
+                        @endphp
+                    @endif
+                    <form role="form" method="POST" action = "{{ url('/createProfile') }}">
                         {{csrf_field()}}
+                        <input type="hidden" name="idExpediente" value="{{$id}}">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre del paciente</label>
-                                <input type="text" class="form-control" id="nombreExpediente" name="nombreExpediente" placeholder="Ingrese el nombre del paciente"  required >
+                                <input type="text" value="{{$name}}" class="form-control" id="nombreExpediente" name="nombreExpediente" placeholder="Ingrese el nombre del paciente"  required >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Edad del paciente</label>
-                                <input type="text" class="form-control" id="edadExpediente" name="edadExpediente" placeholder="Ingrese la edad del paciente"  required >
+                                <input type="text" value="{{$age}}" class="form-control" id="edadExpediente" name="edadExpediente" placeholder="Ingrese la edad del paciente"  required >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre del dueño</label>
-                                <input type="text" class="form-control" id="dueñoExpediente" name="dueñoExpediente" placeholder="Ingrese el nombre del dueño del paciente"  required >
+                                <input type="text" value="{{$nameOwner}}" class="form-control" id="dueñoExpediente" name="dueñoExpediente" placeholder="Ingrese el nombre del dueño del paciente"  required >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Teléfono</label>
-                                <input type="text" class="form-control" id="telefonoExpediente" name="telefonoExpediente" placeholder="Ingrese el teléfono"  required >
+                                <input type="text" value="{{$phone}}" class="form-control" id="telefonoExpediente" name="telefonoExpediente" placeholder="Ingrese el teléfono"  required >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Dirección</label>
-                                <input type="text" class="form-control" id="direccionExpediente" name="direccionExpediente" placeholder="Ingrese la dirección"  required >
+                                <input type="text" value="{{$address}}" class="form-control" id="direccionExpediente" name="direccionExpediente" placeholder="Ingrese la dirección"  required >
                             </div>
                         
                             <div class="row">
@@ -73,7 +88,13 @@
                                                         <select id="idMascota" name="idMascota" class="form-control">
                                                             <option value="0">--Seleccione una opción--</option>
                                                             @foreach($mascotas as $mascota)
-                                                                <option value="{{$mascota->idMascota}}">{{$mascota->nombreMascota}} | {{$mascota->tipoMascota}}</option>
+                                                                @php
+                                                                    $checked = '';
+                                                                @endphp
+                                                                @if($petName == $mascota->nombreMascota)
+                                                                    @php $checked = 'selected'; @endphp
+                                                                @endif
+                                                                <option value="{{$mascota->idMascota}}" {{$checked}}>{{$mascota->nombreMascota}} | {{$mascota->tipoMascota}}</option>
                                                             @endforeach
                                                         </select>
                                                         <br>
@@ -104,7 +125,13 @@
                                                 <select name="idRaza" class="form-control">
                                                     <option value="0">--Seleccione una opción--</option>
                                                     @foreach($razas as $raza)
-                                                        <option value="{{$raza->idRaza}}">{{$raza->nombreRaza}}</option>
+                                                        @php
+                                                            $checked = '';
+                                                        @endphp
+                                                        @if($raceName == $raza->nombreRaza)
+                                                            @php $checked = 'selected'; @endphp
+                                                        @endif
+                                                        <option value="{{$raza->idRaza}}" {{$checked}}>{{$raza->nombreRaza}}</option>
                                                     @endforeach
                                                 </select>
                                                 <br>
@@ -130,7 +157,13 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <input type="submit" class="btn btn-primary" value="Registrar" />
+                            @php
+                                $type = 'Registrar';
+                            @endphp
+                            @if(isset($profile))
+                                @php $type = 'Actualizar'; @endphp
+                            @endif
+                            <input type="submit" class="btn btn-primary" value="{{$type}}" />
                             <a href="{{ url('/inicio') }}"><input class="btn btn-danger" value="Cancelar"/></a>
                         </div>
                     </form>

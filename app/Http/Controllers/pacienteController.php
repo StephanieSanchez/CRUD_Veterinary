@@ -13,6 +13,9 @@ class pacienteController extends Controller
 {
     //
     function createProfile(Request $request){
+        if($request->idExpediente){
+            
+        }
         $campos=[
             'nombreExpediente' => 'required',
             'edadExpediente' => 'required',
@@ -85,6 +88,23 @@ class pacienteController extends Controller
         return view('modulos.listaPerfiles', $datos);
     }
 
+    function getProfile(Request $request){
+        $sql = "SELECT * FROM expediente as ex join mascota as ma on ex.idMascota = ma.idMascota join raza as ra on ex.idRaza = ra.idRaza WHERE idExpediente = ".$request->idExpediente;
+        $profile = DB::select($sql);
+        //var_dump($profile->;
+        $sql = 'SELECT * FROM mascota';
+        $mascotas = DB::select($sql);
+        $sql = 'SELECT * FROM raza';
+        $razas = DB::select($sql);
+        return view('modulos.registrarPerfil', ['profile' => $profile[0]])->with('mascotas', $mascotas)->with('razas', $razas);
+    }
+
+    function updateProfile(Request $request){
+        $keys = '_token';
+        $datos = request()->except($keys);
+        paciente::where('idExpediente', '=', $request -> idExpediente)->update($datos);
+        return redirect('/listaPerfiles');
+    }
     function deleteProfile(Request $request){
         $keys = '_token';
         $datos = request()->except($keys);

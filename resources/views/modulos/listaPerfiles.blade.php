@@ -50,9 +50,9 @@
                         <td>{{$mascota->telefonoExpediente}}</td>
                         <td>{{$mascota->edadExpediente}}</td>
                         <td>
-                            <form method="post" action="#" style="display:inline">
+                            <form method="post" action="{{ url('/getProfile')}}" style="display:inline">
                                 {{csrf_field()}}
-                                <input type="hidden" name="clave_acc" value="{{$mascota->idExpediente}}"/>
+                                <input type="hidden" name="idExpediente" value="{{$mascota->idExpediente}}"/>
                                 <button type="submit" name="Ver" class="btn btn-info">Ver</button>
                             </form>
                             <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="#eliminar{{$mascota->idExpediente}}">Eliminar</a>   
