@@ -168,16 +168,16 @@
                                 <div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header">
-                                           Buscar usuario ya registrado
+                                          <input type="checkbox" /> Buscar usuario ya registrado
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Nombre de usuario</label>
-                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required >
+                                                <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario" required disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Contraseña</label>
-                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required >
+                                                <input type="password" class="form-control" id="contraseñaUsusario" name="contraseñaUsusario" placeholder="Ingrese la contraseña" required disabled>
                                             </div>
                                         </div>
                                     </div>
