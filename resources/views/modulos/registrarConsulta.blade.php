@@ -47,6 +47,7 @@
                 <div class="card-footer">
                   <input type="submit" class="btn btn-primary" value="Buscar" />
                   <a href="{{ url('/inicio') }}"><input class="btn btn-danger" value="Cancelar"/></a>
+                  <a href="{{ url('/createProfile') }}" class="btn btn-info">Registrar nuevo perfil</a>
                 </div>
                 </div> 
               </form>

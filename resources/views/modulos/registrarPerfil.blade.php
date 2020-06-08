@@ -90,7 +90,7 @@
                                                         <label for="exampleInputEmail1">Mascota</label>
                                                         <p>Seleccione una opción existente</p>
                                                         <select id="idMascota" name="idMascota" class="form-control" onchange="activarOpcion(this)">
-                                                            <option value="0" disabled selected>--Seleccione una opción--</option>
+                                                            <option disabled selected>--Seleccione una opción--</option>
                                                             <option value="0">Registrar otro</option>
                                                             @foreach($mascotas as $mascota)
                                                                 @php
@@ -128,7 +128,7 @@
                                                 <label for="exampleInputEmail1">Nombre de la raza</label>
                                                 <p>Seleccione una opción existente</p>
                                                 <select name="idRaza" class="form-control" onchange="activarOpcionRaza(this)">
-                                                    <option value="0" disabled selected>--Seleccione una opción--</option>
+                                                    <option disabled selected>--Seleccione una opción--</option>
                                                     <option value="0">Registrar otro</option>
                                                     @foreach($razas as $raza)
                                                         @php
@@ -152,7 +152,7 @@
                                 <h3 class="card-title">Datos del usuario</h3>
                             </div>
                             <p>El usuario registrado tendrá acceso al sistema para consultar datos de su mascota</p>
-                            <input type="checkbox" onclick="camposUsuarios()"/> Buscar usuario ya registrado
+                            <input type="checkbox" name="usuarioExiste"/> Buscar usuario ya registrado
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nombre de usuario</label>
                                 <input type="text" class="form-control" id="nombreUsusario" name="nombreUsusario" placeholder="Ingrese el nombre de usuario"  required>

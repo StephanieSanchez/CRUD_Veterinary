@@ -8,6 +8,7 @@ use App\mascota;
 use App\raza;
 use App\usuario;
 use Illuminate\Support\Facades\DB;
+use PDO;
 
 class pacienteController extends Controller
 {
@@ -19,7 +20,7 @@ class pacienteController extends Controller
             'dueñoExpediente' => 'required',
             'telefonoExpediente' => 'required|integer',
             'direccionExpediente' => 'required',
-            'nombreUsusario' => 'required|unique:usuario',
+            'nombreUsusario' => 'required',
             'contraseñaUsusario' => 'required'
         ];
         $mensaje = ["required" => 'El atributo :attribute es requerido',
@@ -27,48 +28,64 @@ class pacienteController extends Controller
                     "string" => 'El atributo :attribute debe tener un valor valido al dato que se pide',
                     "unique" => 'El atributo :attribute tiene un valor ya existente'];
         $this->validate($request, $campos, $mensaje);
+        $usuario = new usuario;
+        $raza = new raza;
+        $mascota = new mascota;
+        $paciente = new paciente;
         try{
-            $usuario = new usuario;
-            $raza = new raza;
-            $mascota = new mascota;
-            $paciente = new paciente;
-            $usuario -> nombreUsusario = $request -> nombreUsusario;
-            $usuario -> contraseñaUsusario = $request -> contraseñaUsusario;
-            $usuario -> tipoUsuario = 3;
-            $usuario -> save();
-            $idUsuario = DB::getPdo()->lastInsertId();
-            if($request -> idMascota == 0){
-                $mascota -> nombreMascota = $request -> nombreMascota;
-                $mascota -> tipoMascota = $request -> tipoMascota;
-                $mascota -> save();
-                $idMascota = DB::getPdo()->lastInsertId();
+            if(isset($request->usuarioExiste)){
+                $sql = 'SELECT * FROM usuario WHERE nombreUsusario="'.$request -> nombreUsusario.'" AND contraseñaUsusario="'.$request -> contraseñaUsusario.'"';
+                $usuario = DB::table('usuario')->select('idUsuario')
+                            ->where("nombreUsusario","=",$request->nombreUsusario)
+                            ->where("contraseñaUsusario","=",$request->contraseñaUsusario)
+                            ->take(1)->get();
+                $res = $usuario->first();
+                
+                    $idUsuario = $res->idUsuario;
             }else{
-                $idMascota = $request -> idMascota;
+                $usuario -> nombreUsusario = $request -> nombreUsusario;
+                $usuario -> contraseñaUsusario = $request -> contraseñaUsusario;
+                $usuario -> tipoUsuario = 3;
+                $usuario -> save();
+                $idUsuario = DB::getPdo()->lastInsertId();
             }
-            if($request -> idRaza == 0){
-                $raza -> nombreRaza = $request -> nombreRaza;
-                $raza -> idMascota = $idMascota;
-                $raza -> save();
-                $idRaza = DB::getPdo()->lastInsertId();
-            }else{
-                $idRaza = $request -> idRaza;
+            try{
+                if($request -> idMascota == 0){
+                    $mascota -> nombreMascota = $request -> nombreMascota;
+                    $mascota -> tipoMascota = $request -> tipoMascota;
+                    $mascota -> save();
+                    $idMascota = DB::getPdo()->lastInsertId();
+                }else{
+                    $idMascota = $request -> idMascota;
+                }
+                if($request -> idRaza == 0){
+                    $raza -> nombreRaza = $request -> nombreRaza;
+                    $raza -> idMascota = $idMascota;
+                    $raza -> save();
+                    $idRaza = DB::getPdo()->lastInsertId();
+                }else{
+                    $idRaza = $request -> idRaza;
+                }
+                $now = new \DateTime();
+                $paciente -> nombreExpediente = $request -> nombreExpediente;
+                $paciente -> edadExpediente = $request -> edadExpediente;
+                $paciente -> dueñoExpediente = $request -> dueñoExpediente;
+                $paciente -> telefonoExpediente = $request -> telefonoExpediente;
+                $paciente -> direccionExpediente = $request -> direccionExpediente;
+                $paciente -> fechaExpediente = $now->format('Y-m-d');
+                $paciente -> estatusExpediente = 1;
+                $paciente -> idRaza = $idRaza;
+                $paciente -> idMascota = $idMascota;
+                $paciente -> idUsuario = $idUsuario;
+                $paciente -> save();
+                alert()->success('Se ha registrado el perfil', '¡Exito!');
+                return redirect('/createProfile');
+            }catch(\Exception $e){
+                alert()->warning('No se registro el perfil', '¡Error!');
+                return redirect('/createProfile');
             }
-            $now = new \DateTime();
-            $paciente -> nombreExpediente = $request -> nombreExpediente;
-            $paciente -> edadExpediente = $request -> edadExpediente;
-            $paciente -> dueñoExpediente = $request -> dueñoExpediente;
-            $paciente -> telefonoExpediente = $request -> telefonoExpediente;
-            $paciente -> direccionExpediente = $request -> direccionExpediente;
-            $paciente -> fechaExpediente = $now->format('Y-m-d');
-            $paciente -> estatusExpediente = 1;
-            $paciente -> idRaza = $idRaza;
-            $paciente -> idMascota = $idMascota;
-            $paciente -> idUsuario = $idUsuario;
-            $paciente -> save();
-            alert()->success('Se ha registrado el perfil', '¡Exito!');
-            return redirect('/createProfile');
         }catch(\Exception $e){
-            alert()->warning('No se registro el perfil', '¡Error!');
+            alert()->warning('No se pudo consultar el usuario', '¡Error!');
             return redirect('/createProfile');
         }
 
