@@ -27,7 +27,7 @@
             <!-- form start -->
             <div class="row" id="searchRow">
               <div class="col-md-12">
-                <form role="form" method="POST" action="">
+                <form role="form" method="POST" action = "{{ url('/getRecords') }}">
                 {{csrf_field()}}
                 <div class="card">
                 <div class="card-header">
@@ -38,8 +38,8 @@
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Numero de expedinte</label>
-                        <input type="text" class="form-control" id="idExpediente" name="idExpediente" placeholder="Ingrese el numero de expediente" >
+                        <label for="exampleInputEmail1">Busqueda del expedinte</label>
+                        <input type="text" class="form-control" id="keyExpediente" name="keyExpediente" placeholder="Ingrese el numero, nombre, dueño del expediente" >
                       </div>
                     </div>
                   </div>
@@ -66,23 +66,41 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                        <td>Expediente</td>
-                        <td>Mascota</td>
-                        <td>Dueño</td>
-                        <td>Telefono</td>
-                        <td>
-                            <form method="post" action="" style="display:inline">
-                                {{csrf_field()}}
-                                <input type="hidden" name="idExpediente" value=""/>
-                                <button type="submit" name="Ver" class="btn btn-info">Seleccionar</button>
-                            </form>  
-                        </td>
-                    </tr>
+                    @if(isset($records))
+                      @foreach($records as $record)
+                        <tr>
+                            <td>{{$record->idExpediente}}</td>
+                            <td>{{$record->nombreExpediente}}</td>
+                            <td>{{$record->dueñoExpediente}}</td>
+                            <td>{{$record->telefonoExpediente}}</td>
+                            <td>
+                                <form method="POST" action = "{{ url('/getRecord') }}" style="display:inline">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="idExpediente" value="{{$record->idExpediente}}"/>
+                                    <button type="submit" name="Ver" class="btn btn-info">Seleccionar</button>
+                                </form>  
+                            </td>
+                        </tr>
+                      @endforeach
+                    @endif
                   </tbody>
                 </table>
               </div>
             </div>
+            @php $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; $date = ''; $cosultation = ''; $historic = '' @endphp
+            @isset($recordEx) 
+                @php
+                    $name = $recordEx->nombreExpediente;
+                    $age = $recordEx->edadExpediente;
+                    $nameOwner = $recordEx->dueñoExpediente; 
+                    $phone = $recordEx->telefonoExpediente; 
+                    $address = $recordEx->direccionExpediente;
+                    $petName = $recordEx->nombreMascota;
+                    $raceName = $recordEx->nombreRaza;
+                    $date = $recordEx->fechaExpediente;
+                    $id = $recordEx->idExpediente;
+                @endphp
+            @endisset
             <div class="row" id="profileRow">
               <div class="col-md-12">
                 <div class="card">
@@ -92,17 +110,17 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
-                        <label>Numero de expediente:</label><br>
-                        <label>Nombre del paciente:</label><br>
-                        <label>Edad:</label><br>
-                        <label>Tipo de mascota:</label><br>
-                        <label>Raza:</label><br>
+                        <label>Numero de expediente: </label>{{$id}}<br>
+                        <label>Nombre del paciente: </label>{{$name}}<br>
+                        <label>Edad: </label>{{$age}}<br>
+                        <label>Tipo de mascota: </label>{{$petName}}<br>
+                        <label>Raza: </label>{{$raceName}}<br>
                       </div>
                       <div class="col-md-6">
-                        <label>Fecha de registro:</label><br>
-                        <label>Nombre del dueño:</label><br>
-                        <label>Teléfono:</label><br>
-                        <label>Dirección:</label><br>
+                        <label>Fecha de registro:</label>{{$date}}<br>
+                        <label>Nombre del dueño: </label>{{$nameOwner}}<br>
+                        <label>Teléfono: </label>{{$phone}}<br>
+                        <label>Dirección: </label>{{$address}}<br>
                       </div>
                     </div>
                     <div class="row">
@@ -117,12 +135,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                              <td>Numero</td>
-                              <td>Fecha</td>
-                              <td>Observacion</td>
-                              <td>Doctor</td>
-                          </tr>
+                        @if(isset($consultations))
+                          @foreach($consultations as $consultation)
+                            @foreach($consultation->rows as $row)
+                              <tr>
+                                  <td>{{$consultation->number}}</td>
+                                  <td>{{$consultation->date}}</td>
+                                  <td>{{$row->descripcionRenglonConsulta}}</td>
+                                  <td>{{$consultation->doctor}}</td>
+                              </tr>
+                            @endforeach
+                          @endforeach
+                        @endif
                         </tbody>
                       </table>
                     </div>
