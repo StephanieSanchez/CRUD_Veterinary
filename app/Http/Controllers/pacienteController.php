@@ -110,4 +110,31 @@ class pacienteController extends Controller
         alert()->success('El paciente se ha dado de baja', '¡Exito!');
         return redirect('/listaPerfiles');
     }
+
+    function getRecords(Request $request){
+        $sql = "SELECT * FROM expediente WHERE idExpediente LIKE '".$request->keyExpediente."%' OR nombreExpediente LIKE '".$request->keyExpediente."%' OR dueñoExpediente LIKE '".$request->keyExpediente."%'";
+        $records = DB::select($sql);
+        return view('modulos.registrarConsulta', ['records' => $records]);
+    }
+
+    function getRecord(Request $request){
+        $sql = "SELECT * FROM expediente as ex join mascota as ma on ex.idMascota = ma.idMascota join raza as ra on ex.idRaza = ra.idRaza WHERE ex.idExpediente = ".$request->idExpediente;
+        $record = DB::select($sql);
+
+        $sqlConsultation = "SELECT * FROM expediente as ex  JOIN consulta as co on ex.idExpediente = co.idExpediente  JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE ex.idExpediente = ".$request->idExpediente;
+        $consultations = DB::select($sqlConsultation);
+        $rows = array();
+        foreach($consultations as $consultation){
+            $sqlRow = "SELECT * FROM  consulta as co JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE co.idConsulta = ".$consultation->idConsulta;
+            $row = DB::select($sqlRow);
+            $obj = new \stdClass;
+            $obj->number = $consultation->idConsulta;
+            $obj->date = $consultation->fechaConsulta;
+            $obj->doctor = $consultation->doctorConsulta;
+            $obj->rows = $row;
+            $rows[] = $obj;
+        }
+        //echo "<pre>"; var_dump($rows); echo "</pre>";
+        return view('modulos.registrarConsulta', ['recordEx' => $record[0], 'consultations' => $rows]);
+    }
 }

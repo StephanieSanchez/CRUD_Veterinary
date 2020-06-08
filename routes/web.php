@@ -26,6 +26,8 @@ Route::get('/listaPerfiles', 'pacienteController@getProfiles');
 Route::post('/getProfile', 'pacienteController@getProfile');
 Route::post('/updateProfile', 'pacienteController@updateProfile');
 Route::post('/deleteProfile', 'pacienteController@deleteProfile');
+Route::post('/getRecords', 'pacienteController@getRecords');
+Route::post('/getRecord', 'pacienteController@getRecord');
 Route::get('/createConsult', function (){
     return view('modulos.registrarConsulta');
 });
