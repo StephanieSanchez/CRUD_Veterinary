@@ -69,21 +69,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                @foreach($citas as $cita)
                 <tr>
-                    <td>Expediente</td>
-                    <td>Mascota</td>
-                    <td>Dueño</td>
-                    <td>Telefono</td>
+                    <td>{{$cita->idExpediente}}</td>
+                    <td>{{$cita->nombreExpediente}}</td>
+                    <td>{{$cita->dueñoExpediente}}</td>
+                    <td>{{$cita->telefonoExpediente}}</td>
                     <td>
-                        <form method="post" action="" style="display:inline">
-                            {{csrf_field()}}
-                            <input type="hidden" name="clave_acc" value=""/>
-                            <button type="submit" name="Ver" class="btn btn-info">Hecho</button>
-                        </form>
-                        <a href="#"  class="btn btn-warning" data-toggle="modal" data-target="">Pendiente</a>
-                        <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="">Reagendar</a>   
+                        <a href="#"  class="btn btn-danger" data-toggle="modal" data-target="#reagendar{{$cita->idConsulta}}">Reagendar</a>   
                     </td>
                 </tr>
+                @include('modulos.modalReagendar')
+                @endforeach
                 </tbody>
               </table>
           </div>

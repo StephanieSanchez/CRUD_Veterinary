@@ -36,7 +36,7 @@
             <!-- form start -->
             <div class="row" id="searchRow">
               <div class="col-md-12">
-                <form role="form" method="POST" action = "{{ url('/getRecords') }}">
+                <form role="form" method="POST" action = "{{ url('/getRecordsCita') }}">
                 {{csrf_field()}}
                 <div class="card">
                 <div class="card-header">
@@ -83,7 +83,7 @@
                             <td>{{$record->dueñoExpediente}}</td>
                             <td>{{$record->telefonoExpediente}}</td>
                             <td>
-                                <form method="POST" action = "{{ url('/getRecord') }}" style="display:inline">
+                                <form method="POST" action = "{{ url('/getRecordCita') }}" style="display:inline">
                                     {{csrf_field()}}
                                     <input type="hidden" name="idExpediente" value="{{$record->idExpediente}}"/>
                                     <button type="submit" name="Ver" class="btn btn-info">Seleccionar</button>
@@ -96,7 +96,7 @@
                 </table>
               </div>
             </div>
-            @php $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; $date = ''; $cosultation = ''; $historic = '' @endphp
+            @php $id = ''; $name = ''; $age = ''; $nameOwner = ''; $phone = ''; $address = ''; $petName = ''; $raceName = ''; $date = ''; $cosultation = ''; $historic = ''; $consulta = ''; @endphp
             @isset($recordEx) 
                 @php
                     $name = $recordEx->nombreExpediente;
@@ -108,6 +108,9 @@
                     $raceName = $recordEx->nombreRaza;
                     $date = $recordEx->fechaExpediente;
                     $id = $recordEx->idExpediente;
+                    foreach($consultas as $con){
+                        $consulta = $con->idConsulta;
+                    }
                 @endphp
             @endisset
             @if(isset($recordEx))
@@ -136,33 +139,6 @@
                         <label>Dirección: </label>{{$address}}<br>
                       </div>
                     </div>
-                    <div class="row">
-                      <p>Historial</p>
-                      <table id="tableConsult" class="table table-head-fixed text-nowrap">
-                        <thead>
-                            <tr>
-                            <th>NO.</th>
-                            <th>FECHA CONSULTA</th>
-                            <th>OBSERVACIONES</th>
-                            <th>DOCTOR QUE ATENDIO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @if(isset($consultations))
-                          @foreach($consultations as $consultation)
-                            @foreach($consultation->rows as $row)
-                              <tr>
-                                  <td>{{$consultation->number}}</td>
-                                  <td>{{$consultation->date}}</td>
-                                  <td>{{$row->descripcionRenglonConsulta}}</td>
-                                  <td>{{$consultation->doctor}}</td>
-                              </tr>
-                            @endforeach
-                          @endforeach
-                        @endif
-                        </tbody>
-                      </table>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -173,29 +149,20 @@
             <div id="consult" class="d-none">
             @endif
               <div class="col-md-12">
-                <form role="form" method="POST" action="{{ url('/consultAdd') }}">
+                <form role="form" method="POST" action="{{ url('/addCita') }}">
                 {{csrf_field()}}
                   <div class="card">
                     <div class="card-header">
                       Registro de consulta
                     </div>
                     <div class="card-body">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Nombre del doctor</label>
-                        <input type="text" class="form-control" id="doctorConsulta" name="doctorConsulta" placeholder="Doctor que atiende"  required >
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Observaciones</label>
-                        <input type="text" class="form-control" id="descripcionRenglonConsulta" name="descripcionRenglonConsulta" placeholder="Descripción o recetas"  required >
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Fecha de próxima cita</label>
-                        <input type="date" class="form-control" id="proximaConsulta" name="proximaConsulta" placeholder="Fecha de proxima cita">
-                      </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Fecha de próxima cita</label>
+                            <input type="date" class="form-control" id="proximaConsulta" name="proximaConsulta" placeholder="Fecha de proxima cita" required>
+                        </div>
                     </div>
                     <div class="card-footer">
-                      <input type="hidden" name="idExpediente" value="{{$id}}">
+                      <input type="text" name="idConsulta" value="{{$consulta}}">
                       <input type="submit" class="btn btn-primary" value="Registrar" />
                       <a href="{{ url('/inicio') }}"><input class="btn btn-danger" value="Cancelar"/></a>
                     </div>

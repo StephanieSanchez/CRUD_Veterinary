@@ -105,18 +105,33 @@ class pacienteController extends Controller
     }
 
     function getProfile(Request $request){
-        $sql = "SELECT * FROM expediente as ex join mascota as ma on ex.idMascota = ma.idMascota join raza as ra on ex.idRaza = ra.idRaza WHERE idExpediente = ".$request->idExpediente;
+        $sql = "SELECT * FROM expediente as ex join mascota as ma on ex.idMascota = ma.idMascota join raza as ra on ex.idRaza = ra.idRaza join usuario as us on ex.idUsuario = us.idUsuario WHERE idExpediente = ".$request->idExpediente;
         $profile = DB::select($sql);
         //var_dump($profile->;
         $sql = 'SELECT * FROM mascota';
         $mascotas = DB::select($sql);
         $sql = 'SELECT * FROM raza';
         $razas = DB::select($sql);
-        return view('modulos.registrarPerfil', ['profile' => $profile[0]])->with('mascotas', $mascotas)->with('razas', $razas);
+        $sqlConsultation = "SELECT * FROM expediente as ex  JOIN consulta as co on ex.idExpediente = co.idExpediente  JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE ex.idExpediente = ".$request->idExpediente;
+        $consultations = DB::select($sqlConsultation);
+        $rows = array();
+        foreach($consultations as $consultation){
+            $sqlRow = "SELECT * FROM  consulta as co JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE co.idConsulta = ".$consultation->idConsulta;
+            $row = DB::select($sqlRow);
+            $obj = new \stdClass;
+            $obj->number = $consultation->idConsulta;
+            $obj->date = $consultation->fechaConsulta;
+            $obj->doctor = $consultation->doctorConsulta;
+            $obj->rows = $row;
+            $rows[] = $obj;
+        }
+        $sqlCitas = "SELECT * from consulta WHERE proximaConsulta >= CURDATE() AND idConsulta = ".$consultation->idConsulta;
+        $citas = DB::select($sqlCitas);
+        return view('modulos.registrarPerfil', ['profile' => $profile[0]])->with('mascotas', $mascotas)->with('razas', $razas)->with('consultas', $rows)->with('citas', $citas);
     }
 
     function updateProfile(Request $request){
-        $sql = "UPDATE expediente SET nombreExpediente = '".$request->nombreExpediente."', edadExpediente = '".$request->edadExpediente."', dueñoExpediente = '".$request->dueñoExpediente."', telefonoExpediente = '".$request->telefonoExpediente."', direccionExpediente = '".$request->direccionExpediente."', idMascota = ".$request->idMascota.", idRaza = ".$request->idRaza." WHERE idExpediente = ".$request->idExpediente;
+        $sql = "UPDATE expediente join usuario on expediente.idUsuario = usuario.idUsuario SET nombreExpediente = '".$request->nombreExpediente."', edadExpediente = '".$request->edadExpediente."', dueñoExpediente = '".$request->dueñoExpediente."', telefonoExpediente = '".$request->telefonoExpediente."', direccionExpediente = '".$request->direccionExpediente."', idMascota = ".$request->idMascota.", idRaza = ".$request->idRaza.", nombreUsusario = '".$request->nombreUsusario."', contraseñaUsusario = '".$request->contraseñaUsusario."' WHERE idExpediente = ".$request->idExpediente;
         DB::update($sql);
         return redirect('/listaPerfiles');
     }
@@ -153,5 +168,11 @@ class pacienteController extends Controller
         }
         //echo "<pre>"; var_dump($rows); echo "</pre>";
         return view('modulos.registrarConsulta', ['recordEx' => $record[0], 'consultations' => $rows]);
+    }
+
+    function getViewInicio(){
+        $sql = "SELECT * FROM consulta as con JOIN expediente as ex ON con.idExpediente=ex.idExpediente WHERE proximaConsulta = CURDATE()";
+        $citas = DB::select($sql);
+        return view('modulos.inicio')->with("citas",$citas);
     }
 }

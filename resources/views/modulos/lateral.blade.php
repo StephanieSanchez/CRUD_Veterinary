@@ -73,15 +73,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item has-treeview">
-                <a href="#" class="nav-link active">
+                <a href="{{ url('/createCita') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registro de citas</p>
-                </a>
-              </li>
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Consultar citas</p>
                 </a>
               </li>
             </ul>
