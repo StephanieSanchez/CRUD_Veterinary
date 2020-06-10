@@ -69,6 +69,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                @isset($citas)
                 @foreach($citas as $cita)
                 <tr>
                     <td>{{$cita->idExpediente}}</td>
@@ -81,6 +82,7 @@
                 </tr>
                 @include('modulos.modalReagendar')
                 @endforeach
+                @endisset
                 </tbody>
               </table>
           </div>

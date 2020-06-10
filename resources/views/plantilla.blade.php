@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/adminlte.min.css">
   <!-- jQuery -->
 <script src="jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <!-- AdminLTE App -->
 <script src="js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -151,6 +152,78 @@ document.getElementById('etiqueta_fecha').innerHTML=fecha;
 <script>
   function camposUsuarios(){
     document.getElementById("contraseñaUsusario").disabled = !document.getElementById("contraseñaUsusario").disabled;
+  }
+</script>
+<script>
+  function activarFecha(op){
+    var opc = op.value;
+    switch(opc){
+      case '0':
+        document.getElementById("fecha").disabled = false;
+        document.getElementById("fecha1").disabled = true;
+        document.getElementById("fecha2").disabled = true;
+      break;
+      case '1':
+      document.getElementById("fecha").disabled = true;
+      document.getElementById("fecha1").disabled = false;
+      document.getElementById("fecha2").disabled = false;
+      break;
+      default:
+      break;
+    }
+  }
+</script>
+<script>
+  function pintarChart(datos){
+    var labelsArray = [];
+    var dataArray = [];
+    for(var i in datos)
+      labelsArray.push([i, datos[i]["fechaConsulta"]]);
+      
+    for(var j in datos)
+      dataArray.push([j, datos[j]["total"]]);
+
+    console.log(labelsArray);
+    console.log(dataArray);
+    console.log(datos);
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labelsArray,
+            datasets: [{
+                label: '# of Votes',
+                data: dataArray,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
   }
 </script>
   @include('sweet::alert')

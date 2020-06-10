@@ -37,3 +37,7 @@ Route::post('/getRecordsCita', 'consultaController@getRecordsCita');
 Route::post('/getRecordCita', 'consultaController@getRecordCita');
 Route::post('/addCita', 'consultaController@addCita');
 Route::post('/updateCita', 'consultaController@updateCita');
+Route::get('/historico', function (){
+    return view('modulos.historico');
+});
+Route::post('/getConsultas', 'consultaController@getAllConsults');

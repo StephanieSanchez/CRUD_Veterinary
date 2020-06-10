@@ -81,7 +81,7 @@
             </ul>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
+            <a href="{{ url('/historico') }}" class="nav-link active">
               <i class="fa fa-signal" aria-hidden="true"></i>
               <p>Historíco</p>
             </a>
