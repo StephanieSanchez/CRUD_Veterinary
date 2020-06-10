@@ -178,14 +178,12 @@ document.getElementById('etiqueta_fecha').innerHTML=fecha;
     var labelsArray = [];
     var dataArray = [];
     for(var i in datos)
-      labelsArray.push([i, datos[i]["fechaConsulta"]]);
+      labelsArray.push(datos[i]["fechaConsulta"]);
       
     for(var j in datos)
-      dataArray.push([j, datos[j]["total"]]);
+      dataArray.push(datos[j]["total"]);
 
-    console.log(labelsArray);
-    console.log(dataArray);
-    console.log(datos);
+    console.info(dataArray);
 
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
