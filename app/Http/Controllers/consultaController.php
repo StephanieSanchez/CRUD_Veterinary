@@ -10,6 +10,7 @@ use App\usuario;
 use App\consulta;
 use App\renglonconsulta;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
 class consultaController extends Controller
 {
     function addConsult(Request $request){
@@ -121,24 +122,11 @@ class consultaController extends Controller
         //return $fechasConsultas;
     }
 
-    function showCharts(Request $request){
-        $fechas = new \stdClass();
-        if($request->opcFecha == 0){
-            $sqlConsultas = "SELECT fechaConsulta, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente WHERE fechaConsulta='".$request->fecha."' GROUP BY fechaConsulta";
-            $sqlDocotres = "SELECT doctorConsulta, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente WHERE fechaConsulta='".$request->fecha."' GROUP BY doctorConsulta";
-            $sqlAnimales = "SELECT nombreMascota, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente join mascota as mas on ex.idExpediente=mas.idExpediente WHERE fechaConsulta='".$request->fecha."' GROUP BY nombreMascota";
-            $fechas->fecha = $request->fecha;
-        }else{
-            $sqlConsultas = "SELECT fechaConsulta, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente WHERE fechaConsulta BETWEEN '".$request->fecha1."' AND '".$request->fecha2."' GROUP BY fechaConsulta";
-            $sqlDocotres = "SELECT doctorConsulta, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente WHERE fechaConsulta BETWEEN '".$request->fecha1."' AND '".$request->fecha2."' GROUP BY doctorConsulta";
-            $sqlAnimales = "SELECT nombreMascota, count(*) FROM consulta as con join expediente as ex on con.idExpediente = ex.idExpediente join mascota as mas on ex.idExpediente=mas.idExpediente WHERE fechaConsulta BETWEEN '".$request->fecha1."' AND '".$request->fecha2."' GROUP BY nombreMascota";
-            $fechas->fecha1 = $request->fecha1;
-            $fechas->fecha2 = $request->fecha2;
-        }
-        $fechasConsultas = DB::select($sqlConsultas);        
-        $doctores = DB::select($sqlDocotres);
-        $animales = DB::select($sqlAnimales);
-        return view("modulos.historico")->with("fechasConsultas", $fechasConsultas)->with("doctores", $doctores)->with("animales", $animales)->with("fechas", $fechas);
+    function createPdf(){
+        $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+        $pdf = PDF::loadView('modulos.historico', $data)
+            ->stream('historico.pdf');
+        //return $pdf->download('historico.pdf');
     }
 
 }

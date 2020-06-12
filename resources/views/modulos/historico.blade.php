@@ -44,6 +44,7 @@
                     </div>
                 </div>
                 <!-- /.card-header -->
+                
                     <div class="card-body table-responsive p-0" style="height: 300px;">
                         @isset($fechas)
                             @isset($fechas->fecha2)
@@ -89,8 +90,8 @@
                     <div class="card-footer">
                     @isset($fechasConsultas)
                         <input type="button" value="Generar gráficas por fechas" class="btn btn-success" onclick="pintarChart({{ json_encode($fechasConsultas,TRUE) }})" />
-                        <input type="button" value="Generar gráficas por doctor" class="btn btn-success" onclick="pintarChart({{ json_encode($doctores,TRUE) }})" />
-                        <input type="button" value="Generar gráficas por tipo de paciente" class="btn btn-success" onclick="pintarChart({{ json_encode($animales,TRUE) }})" />
+                        
+                        <input type="button" value="Generar gráficas por tipo de paciente" class="btn btn-success" onclick="pintarChart3({{ json_encode($animales,TRUE) }})" />
                     @endisset
                 </div>
                 </div>
@@ -98,12 +99,25 @@
                 @isset($consultas)
                     <div class="card">
                         <div class="card-body">
-                            <canvas id="myChart" width="400" height="400"></canvas>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <canvas id="myChart" width="400" height="400"></canvas>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <canvas id="myChart3" width="400" height="400"></canvas>
+                                </div>
+                            </div>
                         </div>
+                        <form role="form" action="{{ url('/getPdf') }}" method="POST">
+                        {{csrf_field()}}
                         <div class="card-footer">
-                            <input type="button" value="Generar reporte PDF" class="btn btn-success"/>
+                                <input type="submit" value="Generar reporte PDF" class="btn btn-success"/>
                         </div>
+                        </form>
                     </div>
+                
                 @endisset
             </div>
             </div>

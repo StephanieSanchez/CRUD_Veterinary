@@ -41,3 +41,4 @@ Route::get('/historico', function (){
     return view('modulos.historico');
 });
 Route::post('/getConsultas', 'consultaController@getAllConsults');
+Route::post('/getPdf', 'consultaController@createPdf');
