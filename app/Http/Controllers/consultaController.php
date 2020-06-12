@@ -124,9 +124,9 @@ class consultaController extends Controller
 
     function createPdf(){
         $data = ['title' => 'Welcome to ItSolutionStuff.com'];
-        $pdf = PDF::loadView('modulos.historico', $data)
-            ->stream('historico.pdf');
-        //return $pdf->download('historico.pdf');
+        $pdf = PDF::loadView('modulos.historico', $data);
+            //->stream('historico.pdf');
+        return $pdf->download('historico.pdf');
     }
 
 }
