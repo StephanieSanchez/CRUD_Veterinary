@@ -122,11 +122,24 @@ class consultaController extends Controller
         //return $fechasConsultas;
     }
 
-    function createPdf(){
-        $data = ['title' => 'Welcome to ItSolutionStuff.com'];
-        $pdf = PDF::loadView('modulos.historico', $data);
-            //->stream('historico.pdf');
-        return $pdf->download('historico.pdf');
+    function createPdf(Request $request){
+       // return $request;
+        $array = json_decode($request->fechasConsulta, true);
+        $rows=array();
+        
+        foreach ($array as $value){
+            $consultas = new \stdClass;
+            $consultas -> idConsulta = $value["idConsulta"];
+            $consultas -> fechaConsulta = $value["fechaConsulta"];
+            $consultas -> doctorConsulta = $value["doctorConsulta"];
+            $consultas -> nombreExpediente = $value["nombreExpediente"];
+            $rows[] = $consultas;
+        }
+        $res = json_encode($rows);
+        return $res;
+        //return $pdf = PDF::loadView('modulos.reporte', compact('res'))->stream('historico.pdf');
+        //return $pdf->download('historico.pdf');
+        //return $rows;
     }
 
 }

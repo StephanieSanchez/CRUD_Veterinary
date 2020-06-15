@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <!-- /.card-header -->
-                
+                <form role="form" action="{{ url('/getPdf') }}" method="POST">
                     <div class="card-body table-responsive p-0" style="height: 300px;">
                         @isset($fechas)
                             @isset($fechas->fecha2)
@@ -90,6 +90,7 @@
                     <div class="card-footer">
                     @isset($fechasConsultas)
                         <input type="button" value="Generar gráficas por fechas" class="btn btn-success" onclick="pintarChart({{ json_encode($fechasConsultas,TRUE) }})" />
+                        <input type="hidden" name="fechasConsulta" value="{{ json_encode($consultas,TRUE) }}"/>
                         
                         <input type="button" value="Generar gráficas por tipo de paciente" class="btn btn-success" onclick="pintarChart3({{ json_encode($animales,TRUE) }})" />
                     @endisset
@@ -110,14 +111,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form role="form" action="{{ url('/getPdf') }}" method="POST">
+                        
                         {{csrf_field()}}
                         <div class="card-footer">
                                 <input type="submit" value="Generar reporte PDF" class="btn btn-success"/>
-                        </div>
-                        </form>
+                        </div>  
                     </div>
-                
+                </form>
                 @endisset
             </div>
             </div>
