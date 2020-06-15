@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @isset($res)
+                @isset($res)
                    @foreach($res as $consulta)
                     <tr>
                         <td>{{$loop->iteration}}</td>

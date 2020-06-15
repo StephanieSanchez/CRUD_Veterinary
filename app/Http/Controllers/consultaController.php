@@ -135,11 +135,7 @@ class consultaController extends Controller
             $consultas -> nombreExpediente = $value["nombreExpediente"];
             $rows[] = $consultas;
         }
-        $res = json_encode($rows);
-        return $res;
-        //return $pdf = PDF::loadView('modulos.reporte', compact('res'))->stream('historico.pdf');
-        //return $pdf->download('historico.pdf');
-        //return $rows;
+        return $pdf = PDF::loadView('modulos.reporte', ["res" => $rows])->stream('historico.pdf');
     }
 
 }
