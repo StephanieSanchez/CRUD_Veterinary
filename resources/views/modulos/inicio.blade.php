@@ -13,6 +13,8 @@
       </div><!-- /.container-fluid -->
     </section>
 
+
+  
     <!-- Main content -->
     <section class="content">
 
@@ -52,12 +54,12 @@
 						</a>
 					</div>
         <br>
-        <div class="card-header">
+        <div class="card-header" id="q1">
           <h4>Citas agendadas el dia de hoy: <lavel id="etiqueta_fecha"></lavel></h4>
         </div>
         <br>
           <!-- /.card-header -->
-          <div class="card-body table-responsive p-0" style="height: 300px;">
+          <div class="card-body table-responsive p-0" style="height: 300px;" id="q2">
               <table id="table" class="table table-head-fixed text-nowrap">
                 <thead>
                     <tr>
@@ -110,4 +112,17 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+
+<script  type="text/javascript">
+  if({{session('tipoUsuario')}}==1){
+   
+  }
+  else if({{session('tipoUsuario')}}==2){
+  }
+  else if({{session('tipoUsuario')}}==3){
+    document.getElementById("q1").style.display = "none";
+    document.getElementById("q2").style.display = "none";
+  }
+</script>
 @endsection

@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                      <input type="text" name="idConsulta" value="{{$consulta}}">
+                      <input type="hidden" name="idConsulta" value="{{$consulta}}">
                       <input type="submit" class="btn btn-primary" value="Registrar" />
                       <a href="{{ url('/inicio') }}"><input class="btn btn-danger" value="Cancelar"/></a>
                     </div>

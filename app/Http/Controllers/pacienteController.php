@@ -100,8 +100,14 @@ class pacienteController extends Controller
     }
 
     function getProfiles(){
-        $datos['mascotas'] = paciente::paginate(10);
-        return view('modulos.listaPerfiles', $datos);
+        if(session('tipoUsuario')==3){
+            $sql = "SELECT * FROM expediente as ex join usuario as us on ex.idUsuario = us.idUsuario WHERE nombreUsusario = '".session('Usuario')."'";
+            $resultado = DB::select($sql);
+            return view('modulos.listaPerfiles')->with('mascotas', $resultado);
+        }else{
+            $datos['mascotas'] = paciente::paginate(10);
+            return view('modulos.listaPerfiles', $datos);
+        }
     }
 
     function getProfile(Request $request){
@@ -115,6 +121,7 @@ class pacienteController extends Controller
         $sqlConsultation = "SELECT * FROM expediente as ex  JOIN consulta as co on ex.idExpediente = co.idExpediente  JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE ex.idExpediente = ".$request->idExpediente;
         $consultations = DB::select($sqlConsultation);
         $rows = array();
+        $consultation=new \stdClass;
         foreach($consultations as $consultation){
             $sqlRow = "SELECT * FROM  consulta as co JOIN renglonconsulta as rc on co.idConsulta = rc.idConsulta WHERE co.idConsulta = ".$consultation->idConsulta;
             $row = DB::select($sqlRow);

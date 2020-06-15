@@ -67,9 +67,7 @@
                 <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-                <div class="center-block">
-                    {{$mascotas->links()}}
-                </div>
+                
             </div>
             </div>
     </section>

@@ -10,8 +10,8 @@
       <form method="post" action="{{url('/consult')}}">
       {{csrf_field()}}
         <div class="input-group mb-3">
-          <label for="nombre">{{'correo'}}</label>
-        <input type="email" class="form-control" placeholder="Email" name="correo" required value="{{Cookie::get('usuarioRecordado')}}">
+          <label for="nom">{{'nom'}}</label>
+        <input type="text" class="form-control" placeholder="Nombre" name="nom" required value="{{Cookie::get('usuarioRecordado')}}">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

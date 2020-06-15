@@ -32,7 +32,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item has-treeview">
+              <li class="nav-item has-treeview" id="quita2">
                 <a href="{{ url('/createProfile') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registrar perfil</p>
@@ -46,7 +46,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
+          <li class="nav-item has-treeview menu-open" id="quita3">
             <a href="#" class="nav-link active">
               <i class="fas fa-medkit"></i>
               <p>
@@ -54,7 +54,7 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" >
               <li class="nav-item has-treeview">
                 <a href="{{url('/createConsult')}}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
@@ -63,7 +63,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
+          <li class="nav-item has-treeview menu-open" id="quita4">
             <a href="#" class="nav-link active">
               <i class="fas fa-book"></i>
               <p>
@@ -72,7 +72,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item has-treeview">
+              <li class="nav-item has-treeview" >
                 <a href="{{ url('/createCita') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Registro de citas</p>
@@ -80,14 +80,22 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
+          <li class="nav-item has-treeview" id="quita5">
             <a href="{{ url('/historico') }}" class="nav-link active">
               <i class="fa fa-signal" aria-hidden="true"></i>
               <p>Historíco</p>
             </a>
           </li>
+
+        
+              <li class="nav-item has-treeview">
+                <a href="{{url('/borrarcookie')}}" class="nav-link active">
+                  <i class="fa fa-arrow-left"></i>
+                  <p>Ingresar con otra cuenta</p>
+                </a>
+              </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
+          <a href="{{url('/salir')}}" class="nav-link active">
               <i class="fa fa-arrow-left"></i>
               <p>Salir</p>
             </a>
@@ -97,4 +105,23 @@
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
+ 
+    <script  type="text/javascript">
+  if({{session('tipoUsuario')}}==1){
+   
+  }
+  else if({{session('tipoUsuario')}}==2){
+    document.getElementById("quita3").style.display = "none";
+  }
+  else if({{session('tipoUsuario')}}==3){
+    document.getElementById("quita2").style.display = "none";
+    document.getElementById("quita3").style.display = "none";
+    document.getElementById("quita4").style.display = "none";
+    document.getElementById("quita5").style.display = "none";
+  }
+</script>
+ 
+ 
+ 
   </aside>
+ 

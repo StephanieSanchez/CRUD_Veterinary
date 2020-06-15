@@ -28,6 +28,17 @@
 
 <body class="hold-transition sidebar-mini layout-fixed" onload="pintarFecha()">
 
+@if(!session()->has('Usuario'))
+   
+  <main>
+   
+ 
+    @yield('login', View::make('modulos.login'))
+
+   </main>   
+
+  @else
+
   @include('modulos.cabecera')
   @include('modulos.lateral')
 
@@ -37,6 +48,9 @@
 </main>
   @include('modulos.pie')
  
+  
+ @endif
+
 
   <script type="text/javascript">
       function buscar() {
@@ -182,8 +196,6 @@ document.getElementById('etiqueta_fecha').innerHTML=fecha;
       
     for(var j in datos)
       dataArray.push(datos[j]["total"]);
-
-
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -232,8 +244,6 @@ document.getElementById('etiqueta_fecha').innerHTML=fecha;
       
     for(var j in datos)
       dataArray.push(datos[j]["total"]);
-
-
     var ctx = document.getElementById('myChart3').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',

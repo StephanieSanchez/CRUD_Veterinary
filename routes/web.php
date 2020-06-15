@@ -13,9 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function(){
+    return view('modulos.login');
+});
+Route::get('/inicio', function(){
     return view('modulos.inicio');
 });
+
 Route::get('/inicio', 'pacienteController@getViewInicio');
 Route::get('/createProfile', 'pacienteController@getView');
 Route::post('/createProfile', 'pacienteController@getView');
@@ -42,3 +46,7 @@ Route::get('/historico', function (){
 });
 Route::post('/getConsultas', 'consultaController@getAllConsults');
 Route::post('/getPdf', 'consultaController@createPdf');
+
+Route::post('/consult','UsuarioController@consult');
+Route::get('/salir','UsuarioController@salir');
+Route::get('/borrarcookie','UsuarioController@borrarCookie');
